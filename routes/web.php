@@ -17,37 +17,14 @@ Route::get('/', function () {
     return view('posts');
 });
 
-// Route::get('/post', function () {
-
-//     $post = file_get_contents(__DIR__ . '/../resources/posts/my-first-post.html');
-
-//     return view('post', [
-//         // 'post' => '<h1>Hello World</h1>'  // $post
-//         'post' => $post
-//     ]);
-// });
-
 Route::get('/posts/{post}', function ($slug) {
-    // return $slug;
-    $path = __DIR__ . "/../resources/posts/{$slug}.html";
-    // dd($path);
-
-    if (! file_exists($path)) {
-        // dd('file does not exist');
-        // abort(404);
+    if (! file_exists($path = __DIR__ . "/../resources/posts/{$slug}.html")) {
         return redirect('/');
     }
 
-    $post = cache()->remember("posts.{$slug}", 1200, function () use ($path) {      //20min * 60sec = 1200 secs
-        // var_dump('file_get_contents');
+    $post = cache()->remember("posts.{$slug}", 1200, function () use ($path) {
         return file_get_contents($path);
     });
 
-    // $post = cache()->remember("posts.{$slug}", 1200, fn() => file_get_contents($path));  // short closure or arrow functions. for php 7.4 or higher but i am using php 7.3.3 right now
-
-    // $post = file_get_contents($path);
-
-    return view('post', [
-        'post' => $post
-    ]);
+    return view('post', ['post' => $post]);
 })->where('post', '[A-z_\-]+');
