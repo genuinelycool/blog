@@ -38,7 +38,14 @@ Route::get('/posts/{post}', function ($slug) {
         return redirect('/');
     }
 
-    $post = file_get_contents($path);
+    $post = cache()->remember("posts.{$slug}", 1200, function () use ($path) {      //20min * 60sec = 1200 secs
+        // var_dump('file_get_contents');
+        return file_get_contents($path);
+    });
+
+    // $post = cache()->remember("posts.{$slug}", 1200, fn() => file_get_contents($path));  // short closure or arrow functions. for php 7.4 or higher but i am using php 7.3.3 right now
+
+    // $post = file_get_contents($path);
 
     return view('post', [
         'post' => $post
