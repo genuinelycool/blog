@@ -23,14 +23,6 @@ class Post
     }
 
     public static function all(){
-        // $files =  File::files(resource_path("posts/"));
-
-        // return array_map(function ($file){
-        //     return $file->getContents();
-        // }, $files);
-
-        // return array_map(fn($file) => $file->getContents(), $files);  // using array function
-
         $files =  File::files(resource_path("posts"));
         $posts = collect($files)
         ->map(function($file){          //arrow fxn:  ->map(fn($file) => YammlFrontMatter::parseFile($file))
@@ -50,21 +42,6 @@ class Post
     }
 
     public static function find($slug){
-        // if (! file_exists($path = resource_path("posts/{$slug}.html"))) {
-        //     throw new ModelNotFoundException();
-        // }
-
-        // $post = cache()->remember("posts.{$slug}", 1200, function () use ($path) {
-        //     return file_get_contents($path);
-        // });
-
-        // return $post;
-
-        // of all the blog posts, find the one with a slug that matches the one that was requested.
-        // $posts = static::all();
-
-        // return $posts->firstWhere('slug', $slug);
-
         return static::all()->firstWhere('slug', $slug);
     }
 }
