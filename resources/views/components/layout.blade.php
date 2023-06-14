@@ -5,8 +5,12 @@
 
 
 <body>
-    <header>
+    {{-- <header>
         @yield('banner')
     </header>
-    @yield('content')
+    @yield('content') --}}
+
+    {{-- {{ $content }} --}}
+
+    {{ $slot }}
 </body>
