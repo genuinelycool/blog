@@ -1,12 +1,3 @@
-{{-- <x-layout content="Hello there"> --}}
-{{-- <x-layout>
-    <x-slot name="content">
-        Hello again
-    </x-slot>
-</x-layout> --}}
-
-
-
 <x-layout>
     @foreach ($posts as $post)
         <article>
