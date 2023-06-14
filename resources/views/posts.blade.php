@@ -1,10 +1,10 @@
-<!doctype html>
+@extends('layout')
 
-<title>My Blog</title>
-<link rel="stylesheet" href="/app.css">
+@section('banner')
+    <h1>My Blog</h1>
+@endsection
 
-
-<body>
+@section('content')
     @foreach ($posts as $post)
         <article>
             <h1>
@@ -18,4 +18,4 @@
             </div>
         </article>
     @endforeach
-</body>
+@endsection
