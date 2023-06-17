@@ -30,7 +30,6 @@
                                     </path>
                                 </g>
                             </svg>
-
                             Back to Posts
                         </a>
 
