@@ -20,20 +20,11 @@ class Post extends Model
                 ->orWhere('body', 'like', '%' . request('search') . '%');
         });
 
-        $query->when($filters['category'] ?? false, function($query, $category){ 
+        $query->when($filters['category'] ?? false, function($query, $category){
             $query->whereHas('category', function($query) use (&$category){
                         $query->where('slug', $category);
                     });
         });
-
-        // $query->when($filters['category'] ?? false, function($query, $category){    // query builder
-        //     $query
-        //         ->whereExists(function($query) use (&$category){
-        //                 $query->from('categories')
-        //                     ->whereColumn('categories.id', 'posts.category_id')
-        //                     ->where('categories.slug', $category);
-        //             });
-        // });
     }
 
     public function category(){
