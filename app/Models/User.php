@@ -17,11 +17,6 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    // protected $fillable = [
-    //     'name',
-    //     'email',
-    //     'password',
-    // ];
 
         protected $guarded = [];
 
@@ -44,15 +39,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // // Accessors example
-    // public function getUsernameAttribute($username){
-    //     return ucwords($username);
-    // }
-
     // eloquent Mutator
     public function setPasswordAttribute($password){
         $this->attributes['password'] = bcrypt($password);
-        // $this->attributes['password'] = 'Foobar';
     }
 
     public function posts(){

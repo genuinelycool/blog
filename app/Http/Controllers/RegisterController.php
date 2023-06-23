@@ -13,21 +13,12 @@ class RegisterController extends Controller
     }
 
     public function store(){
-        // return request()->all();
-        // // var_dump(request()->all());
-
         $attributes = request()->validate([
             'name' => 'required|max:255',
             'username' => 'required|min:3|max:255|unique:users,username',
-            // 'username' => ['required', 'min:3', 'max:255', Rule::unique('users', 'username')],
             'email' => 'required|email|max:255|unique:users,email',
-            // 'password' => 'required|min:7|max:255'
-            'password' => ['required', 'min:7', 'max:255']
+            'password' => 'required|min:7|max:255'
         ]);
-
-        // $attributes['password'] = bcrypt($attributes['password']);
-
-        // dd('success validation succeeded');
 
         User::create($attributes);
 
