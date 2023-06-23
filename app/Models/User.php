@@ -44,6 +44,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // // Accessors example
+    // public function getUsernameAttribute($username){
+    //     return ucwords($username);
+    // }
+
+    // eloquent Mutator
+    public function setPasswordAttribute($password){
+        $this->attributes['password'] = bcrypt($password);
+        // $this->attributes['password'] = 'Foobar';
+    }
+
     public function posts(){
         return $this->hasMany(Post::class);
     }
