@@ -14,7 +14,7 @@ class Post extends Model
     protected $with = ['category', 'author'];
 
     public function scopeFilter($query, array $filters) {
-        $query->when($filters['search'] ?? false, function($query, $search){    // query builder
+        $query->when($filters['search'] ?? false, function($query, $search){
             $query->where(function($query){
                 $query->where('title', 'like', '%' . request('search') . '%')
                     ->orWhere('body', 'like', '%' . request('search') . '%');
@@ -39,11 +39,10 @@ class Post extends Model
     }
 
     public function category(){
-        // hasOne, hasMany, belongsTo, belongsToMany
         return $this->belongsTo(Category::class);
     }
 
-    public function author(){     //foreign key is author_id
+    public function author(){
         return $this->belongsTo(User::class, 'user_id');
     }
 }

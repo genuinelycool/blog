@@ -52,12 +52,10 @@
                 <section class="col-span-8 col-start-5 mt-10 space-y-6">
                     @auth
                         <x-panel>
-                            {{-- <form method="POST" action="#" class="border border-gray-200 p-6 rounded-xl"> --}}
                             <form method="POST" action="/posts/{{ $post->slug }}/comments">
                                 @csrf
 
                                 <header class="flex items-center">
-                                    {{-- <img src="https://i.pravatar.cc/60?u={{ auth()->user()->id }}" alt="" width="60" height="60" class="rounded-xl"> --}}
                                     <img src="https://i.pravatar.cc/60?u={{ auth()->id() }}" alt="" width="40" height="40" class="rounded-full">
                                     <h2 class="ml-4">Want to participate?</h2>
                                 </header>
