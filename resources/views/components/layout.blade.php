@@ -22,17 +22,6 @@
             </div>
 
             <div class="mt-8 md:mt-0 flex items-center">
-                {{-- @if (! auth()->check())
-                    <a href="/register" class="text-xs font-bold uppercase">Register</a>
-                @endif --}}
-
-                {{-- @unless (auth()->check())
-                    <a href="/register" class="text-xs font-bold uppercase">Register</a>
-                @endunless --}}
-
-                {{-- @guest
-                    <a href="/register" class="text-xs font-bold uppercase">Register</a>
-                @endguest --}}
 
                 @auth
                     <span class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->name }}</span>
