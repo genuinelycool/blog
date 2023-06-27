@@ -19,7 +19,10 @@ Route::post('login', [SessionsController::class, 'store'])->middleware('guest');
 Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth');
 
 
-Route::get('ping', function () {
+// Route::get('ping', function () {
+Route::post('newsletter', function () {
+    request()->validate(['email' => 'required|email']);
+
     $mailchimp = new \MailchimpMarketing\ApiClient();
 
     $mailchimp->setConfig([
@@ -31,12 +34,26 @@ Route::get('ping', function () {
     // $response = $mailchimp->lists->getAllLists();;
     // $response = $mailchimp->lists->getList('ee840d381d');
     // $response = $mailchimp->lists->getListMembersInfo('ee840d381d');
-    $response = $mailchimp->lists->addListMember('ee840d381d', [
-        'email_address' => 'resurrectedtemp@gmail.com',
-        'status' => 'subscribed'
-    ]);
-
+    // $response = $mailchimp->lists->addListMember('ee840d381d', [
+    //     // 'email_address' => 'resurrectedtemp@gmail.com',
+    //     'email_address' => request('email'),
+    //     'status' => 'subscribed'
+    // ]);
 
     // print_r($response);
-    ddd($response);
+    // ddd($response);
+
+    try {
+        $response = $mailchimp->lists->addListMember('ee840d381d', [
+            'email_address' => request('email'),
+            'status' => 'subscribed'
+        ]);
+    } catch (\Exception $e) {
+        throw \Illuminate\Validation\ValidationException::withMessages([
+            'email' => 'This email could not be added to our newsletter list.'
+        ]);
+    }
+
+    return redirect('/')
+        ->with('success', 'You are now signed up for our newsletter!');
 });
