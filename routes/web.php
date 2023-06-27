@@ -18,3 +18,25 @@ Route::get('login', [SessionsController::class, 'create'])->middleware('guest');
 Route::post('login', [SessionsController::class, 'store'])->middleware('guest');
 Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth');
 
+
+Route::get('ping', function () {
+    $mailchimp = new \MailchimpMarketing\ApiClient();
+
+    $mailchimp->setConfig([
+        'apiKey' => config('services.mailchimp.key'),
+        'server' => 'us8'
+    ]);
+
+    // $response = $mailchimp->ping->get();
+    // $response = $mailchimp->lists->getAllLists();;
+    // $response = $mailchimp->lists->getList('ee840d381d');
+    // $response = $mailchimp->lists->getListMembersInfo('ee840d381d');
+    $response = $mailchimp->lists->addListMember('ee840d381d', [
+        'email_address' => 'resurrectedtemp@gmail.com',
+        'status' => 'subscribed'
+    ]);
+
+
+    // print_r($response);
+    ddd($response);
+});
