@@ -22,26 +22,3 @@ Route::post('register', [RegisterController::class, 'store'])->middleware('guest
 Route::get('login', [SessionsController::class, 'create'])->middleware('guest');
 Route::post('login', [SessionsController::class, 'store'])->middleware('guest');
 Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth');
-
-// Route::post('newsletter', function () {
-// Route::post('newsletter', function (Newsletter $newsletter) {
-//     request()->validate(['email' => 'required|email']);
-
-//     try {
-//         // $newsletter = new Newsletter();
-//         // $newsletter->subscribe(request('email'));
-
-//         // (new Newsletter())->subscribe(request('email'));    // inline
-//         $newsletter->subscribe(request('email'));    // inline
-
-//     } catch (\Exception $e) {
-//         throw ValidationException::withMessages([
-//             'email' => 'This email could not be added to our newsletter list.'
-//         ]);
-//     }
-
-//     return redirect('/')
-//         ->with('success', 'You are now signed up for our newsletter!');
-// });
-
-// Route::post('newsletter', NewsletterController::class);     // single action contoller
