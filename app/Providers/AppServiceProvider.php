@@ -20,26 +20,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // $this->app->bind('foo', function(){
-        // app()->bind('foo', function(){
-        //     return 'bar';
-        // });
-
-        // app()->bind(Newsletter::class, function(){
-        //     return new Newsletter(
-        //         new ApiClient(),
-        //         'foobar1'
-        //     );
-        // });
 
         app()->bind(Newsletter::class, function(){
-            // $client = new ApiClient();
-
-            // $client->setConfig([       // inline gareko
-            //     'apiKey' => config('services.mailchimp.key'),
-            //     'server' => 'us8'
-            // ]);
-
             $client = (new ApiClient)->setConfig([       // inline gareko
                 'apiKey' => config('services.mailchimp.key'),
                 'server' => 'us8'
