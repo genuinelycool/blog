@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\ConvertKitNewsletter;
+use App\Services\MailchimpNewsletter;
 use App\Services\Newsletter;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
@@ -43,7 +45,8 @@ class AppServiceProvider extends ServiceProvider
                 'server' => 'us8'
             ]);
 
-            return new Newsletter($client);
+            return new MailchimpNewsletter($client);
+            // return new ConvertKitNewsletter($client);
         });
     }
 
