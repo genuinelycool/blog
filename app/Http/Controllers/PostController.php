@@ -26,19 +26,6 @@ class PostController extends Controller
     }
 
     public function create() {
-        // if (auth()->guest()) {
-        //     // abort(403);
-        //     abort(Response::HTTP_FORBIDDEN);
-        // }
-
-        // if (auth()->user()->username !== 'dev') {
-        //     abort(Response::HTTP_FORBIDDEN);
-        // }
-
-        // if (auth()->user()?->username !== 'dev') {
-        //     abort(Response::HTTP_FORBIDDEN);
-        // }
-
         return view('posts.create');
     }
 
