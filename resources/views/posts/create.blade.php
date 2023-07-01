@@ -9,27 +9,28 @@
             <form method="POST" action="/admin/posts" enctype="multipart/form-data">
                 @csrf
 
-                <div class="mb-6">
-                    <label class="block mb-2 upercase font-bold text-xs text-gray-700"
-                        for="title"
-                    >
-                        Title
-                    </label>
+                <x-form.input name="title" />
+                <x-form.input name="slug" />
+                <x-form.input name="thumbnail" type="file" />
+                <x-form.textarea name="excerpt" />
+                <x-form.textarea name="body" />
 
-                    <input class="border border-gray-400 p-2 w-full"
-                        type="text"
-                        name="title"
-                        id="title"
-                        value="{{ old('title') }}"
-                        required
-                    >
+                <x-form.field>
+                    <x-form.label name="category" />
 
-                    @error('title')
-                        <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
-                    @enderror
-                </div>
+                    <select name="category_id" id="category_id">
+                        @foreach (\App\Models\Category::all() as $category)
+                            <option
+                                value="{{ $category->id }}"
+                                {{ old('category_id') == $category->id ? 'selected' : '' }}
+                            >{{ ucwords($category->name) }}</option>
+                        @endforeach
+                    </select>
 
-                <div class="mb-6">
+                    </x-form.error name="category" />
+                </x-form.field>
+
+                {{-- <div class="mb-6">
                     <label class="block mb-2 upercase font-bold text-xs text-gray-700"
                         for="slug"
                     >
@@ -47,9 +48,9 @@
                     @error('slug')
                         <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                     @enderror
-                </div>
+                </div> --}}
 
-                <div class="mb-6">
+                {{-- <div class="mb-6">
                     <label class="block mb-2 upercase font-bold text-xs text-gray-700"
                         for="thumbnail"
                     >
@@ -67,9 +68,9 @@
                     @error('thumbnail')
                         <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                     @enderror
-                </div>
+                </div> --}}
 
-                <div class="mb-6">
+                {{-- <div class="mb-6">
                     <label class="block mb-2 upercase font-bold text-xs text-gray-700"
                         for="excerpt"
                     >
@@ -85,9 +86,9 @@
                     @error('excerpt')
                         <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                     @enderror
-                </div>
+                </div> --}}
 
-                <div class="mb-6">
+                {{-- <div class="mb-6">
                     <label class="block mb-2 upercase font-bold text-xs text-gray-700"
                         for="body"
                     >
@@ -103,35 +104,35 @@
                     @error('body')
                         <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                     @enderror
-                </div>
+                </div> --}}
 
-                <div class="mb-6">
+                {{-- <div class="mb-6">
                     <label class="block mb-2 upercase font-bold text-xs text-gray-700"
                         for="category_id"
                     >
                         Category
                     </label>
 
-                    <select name="category_id" id="category_id">
+                    <select name="category_id" id="category_id"> --}}
                         {{-- @php
                             $categories = \App\Models\Category::all();
                         @endphp --}}
 
                         {{-- @foreach ($categories as $category) --}}
-                        @foreach (\App\Models\Category::all() as $category)
+                        {{-- @foreach (\App\Models\Category::all() as $category)
                             <option
                                 value="{{ $category->id }}"
                                 {{ old('category_id') == $category->id ? 'selected' : '' }}
                             >{{ ucwords($category->name) }}</option>
-                        @endforeach
-                    </select>
+                        @endforeach --}}
+                    {{-- </select>
 
                     @error('category_id')
                         <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                     @enderror
-                </div>
+                </div> --}}
 
-                <x-submit-button>publish</x-submit-button>
+                <x-form.button>publish</x-form.button>
             </form>
         </x-panel>
     </section>
