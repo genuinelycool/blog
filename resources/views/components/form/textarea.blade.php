@@ -1,6 +1,5 @@
 @props(['name'])
 
-{{-- <div class="mb-6"> --}}
 <x-form.field>
     <x-form.label name="{{ $name }}" />
 
