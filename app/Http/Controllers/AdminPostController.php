@@ -19,19 +19,40 @@ class AdminPostController extends Controller
     }
 
     public function store() {
-        $attributes = request()->validate([
-            'title' => 'required',
-            'thumbnail' => 'required|image',
-            'slug' => ['required', Rule::unique('posts', 'slug')],
-            'excerpt' => 'required',
-            'body' => 'required',
-            'category_id' => ['required', Rule::exists('categories', 'id')]
-        ]);
+        // $post = new Post();
+        // $attributes = $this->validatePost($post);
 
-        $attributes['user_id'] = auth()->id();
-        $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
+        // $attributes = $this->validatePost(new Post());
+        // $attributes = $this->validatePost();
 
-        Post::create($attributes);
+        // $attributes = request()->validate([
+        //     'title' => 'required',
+        //     // 'thumbnail' => 'required|image',
+        //     'thumbnail' => $post->exists ? ['image'] : ['required|image'],
+        //     // 'slug' => ['required', Rule::unique('posts', 'slug')],
+        //     'slug' => ['required', Rule::unique('posts', 'slug')->ignore($post)],
+        //     'excerpt' => 'required',
+        //     'body' => 'required',
+        //     'category_id' => ['required', Rule::exists('categories', 'id')],
+        //     'published_at' => 'required'
+        // ]);
+
+        // $attributes['user_id'] = auth()->id();
+        // $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
+
+        // $attributes = array_merge($this->validatePost(), [
+        //     'user_id' => request()->user()->id,
+        //     'thumbnail' => request()->file('thumbnail')->store('thumbnails')
+        // ]);
+
+        // Post::create($attributes);
+
+        Post::create(array_merge($this->validatePost(), [
+            'user_id' => request()->user()->id,
+            'thumbnail' => request()->file('thumbnail')->store('thumbnails')
+        ]));
+
+        // request()->user()->posts()->create();
 
         return redirect('/');
     }
@@ -41,16 +62,22 @@ class AdminPostController extends Controller
     }
 
     public function update(Post $post){
-        $attributes = request()->validate([
-            'title' => 'required',
-            'thumbnail' => 'image',
-            'slug' => ['required', Rule::unique('posts', 'slug')->ignore($post->id)],
-            'excerpt' => 'required',
-            'body' => 'required',
-            'category_id' => ['required', Rule::exists('categories', 'id')]
-        ]);
+        // $attributes = request()->validate([
+        //     'title' => 'required',
+        //     // 'thumbnail' => 'image',
+        //     'thumbnail' => $post->exists ? ['image'] : ['required|image'],
+        //     // 'slug' => ['required', Rule::unique('posts', 'slug')->ignore($post->id)],
+        //     'slug' => ['required', Rule::unique('posts', 'slug')->ignore($post)],
+        //     'excerpt' => 'required',
+        //     'body' => 'required',
+        //     'category_id' => ['required', Rule::exists('categories', 'id')],
+        //     'published_at' => 'required'
+        // ]);
 
-        if (isset($attributes['thumbnail'])) {
+        $attributes = $this->validatePost($post);
+
+        // if (isset($attributes['thumbnail'])) {
+        if ($attributes['thumbnail'] ?? false) {    // php 8
             $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
         }
 
@@ -64,5 +91,32 @@ class AdminPostController extends Controller
 
         return back()->with('success', 'Post Deleted!');
 
+    }
+
+    // public function validatePost(?Post $post = null): array
+    protected function validatePost(?Post $post = null): array
+    {
+        // StorePostRequest
+        // UpdatePostRequest
+
+        $post ??= new Post();
+
+        // $attributes = request()->validate([
+        return request()->validate([
+            'title' => 'required',
+            // 'thumbnail' => 'required|image',
+            'thumbnail' => $post->exists ? ['image'] : ['required', 'image'],
+            // 'slug' => ['required', Rule::unique('posts', 'slug')],
+            'slug' => ['required', Rule::unique('posts', 'slug')->ignore($post)],
+            'excerpt' => 'required',
+            'body' => 'required',
+            'category_id' => ['required', Rule::exists('categories', 'id')],
+            // 'published_at' => 'required'
+            'published_at' => $post->exists ? [] : []
+            // 'published_at' => $post->exists ? [] : ['required']
+
+        ]);
+
+        // return $attributes;
     }
 }
