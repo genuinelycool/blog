@@ -4,7 +4,6 @@
             @csrf
             @method('PATCH')
 
-            {{-- <x-form.input name="title" :value="$post->title" /> --}}
             <x-form.input name="title" :value="old('title', $post->title)" />
             <x-form.input name="slug" :value="old('slug', $post->slug)" />
 

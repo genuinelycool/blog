@@ -19,12 +19,6 @@ class AdminPostController extends Controller
     }
 
     public function store() {
-        // $path = request()->file('thumbnail')->store('thumbnails');
-        // return 'Done: ' . $path;
-
-        // ddd(request()->all());
-        // ddd(request()->file('thumbnail'));
-
         $attributes = request()->validate([
             'title' => 'required',
             'thumbnail' => 'required|image',
