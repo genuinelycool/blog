@@ -22,29 +22,11 @@
             </div>
 
             <div class="mt-8 md:mt-0 flex items-center">
-                {{-- @admin
-                    <x-dropdown-item href="/admin/posts" :active="request()->is('admin/posts')">Dashboard</x-dropdown-item>
-                    <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">New Post</x-dropdown-item>
-                @endadmin --}}
-
                 @auth
-                    {{-- <span class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->name }}</span> --}}
-
                     <x-dropdown>
                         <x-slot name="trigger">
                             <botton class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->name }}</botton>
                         </x-slot>
-
-                        {{-- @if (auth()->user()->can('admin')) --}}
-                        {{-- @if (auth()->user()->can('admin'))
-                            <x-dropdown-item href="/admin/posts" :active="request()->is('admin/posts')">Dashboard</x-dropdown-item>
-                            <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">New Post</x-dropdown-item>
-                        @endif --}}
-
-                        {{-- @can('admin')
-                            <x-dropdown-item href="/admin/posts" :active="request()->is('admin/posts')">Dashboard</x-dropdown-item>
-                            <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">New Post</x-dropdown-item>
-                        @endcan --}}
 
                         @admin
                             <x-dropdown-item href="/admin/posts" :active="request()->is('admin/posts')">Dashboard</x-dropdown-item>

@@ -12,12 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 class PostController extends Controller
 {
     public function index() {
-        // dd(Gate::allows('admin'));
-        // dd(request()->user()->can('admin'));
-        // dd(request()->user()->cannot('admin'));
-
-        // $this->authorize('admin');
-
         return view('posts.index', [
             'posts' => Post::latest()->filter(
                 request(['search', 'category', 'author']))
