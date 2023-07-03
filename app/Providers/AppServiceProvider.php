@@ -2,14 +2,17 @@
 
 namespace App\Providers;
 
-use App\Services\ConvertKitNewsletter;
-use App\Services\MailchimpNewsletter;
+use App\Models\User;
 use App\Services\Newsletter;
+use MailchimpMarketing\ApiClient;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Gate;
+use App\Services\MailchimpNewsletter;
+use App\Services\ConvertKitNewsletter;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use MailchimpMarketing\ApiClient;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -44,5 +47,15 @@ class AppServiceProvider extends ServiceProvider
         // Paginator::useBootstrap();
 
         Model::unguard();
+
+        Gate::define('admin', function (User $user) {
+            // auth()->user()?->username !== 'devusername';
+            return $user->username === 'devusername';
+        });
+
+        Blade::if('admin', function(){
+            // return request()->user()->can('admin');     // Not quite right
+            return request()->user()?->can('admin');     // Not quite right
+        });
     }
 }
